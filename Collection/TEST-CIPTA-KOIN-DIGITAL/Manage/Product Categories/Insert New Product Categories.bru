@@ -1,0 +1,30 @@
+meta {
+  name: Insert New Product Categories
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{API_URL}}/manage/product-categories
+  body: multipartForm
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:multipart-form {
+  business_id: 2
+  outlet_id: 2
+  name: Driving Range
+}
+
+settings {
+  encodeUrl: true
+}

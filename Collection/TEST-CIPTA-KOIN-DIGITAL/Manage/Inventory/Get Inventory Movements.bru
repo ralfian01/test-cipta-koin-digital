@@ -1,0 +1,28 @@
+meta {
+  name: Get Inventory Movements
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{API_URL}}/manage/inventory/ledgers?item_id=2
+  body: json
+  auth: bearer
+}
+
+params:query {
+  item_id: 2
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

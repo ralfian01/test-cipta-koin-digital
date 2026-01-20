@@ -1,0 +1,43 @@
+meta {
+  name: Update Payment Methods
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{API_URL}}/manage/payment_methods
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+body:multipart-form {
+  register_number: 012323122734
+  nickname: Sisca
+  address_domicile: Jakarta
+  phone_number: 628123456789
+  wa_number: 628123456789
+  nik: 3215012847329283
+  fullname: Sisca Ra
+  birth_place: Jakarta
+  birth_date: 1999-12-01
+  gender: F
+  address: Jakarta Selatan
+  npwp: 00.001.010.1-100.000
+  registration_number: 320193802121
+  registration_type: NIB
+  business_name: Putsutech
+  business_address: Tangerang
+  business_npwp: 11.111.010.1-100.000
+  business_phone_number: 628123456789
+  business_email: ralfian096@gmail.com
+  business_registration_date: 2020-07-10
+}
+
+settings {
+  encodeUrl: true
+}

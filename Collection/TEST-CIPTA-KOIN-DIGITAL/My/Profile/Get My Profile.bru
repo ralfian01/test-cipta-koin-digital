@@ -1,0 +1,28 @@
+meta {
+  name: Get My Profile
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/my/profile
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~business_id: 
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

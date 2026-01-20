@@ -1,0 +1,25 @@
+meta {
+  name: Get Balance Sheet Reports
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{API_URL}}/manage/finance/reports/consolidated/balance-sheet?end_date=2025-10-31&start_date=2025-09-01
+  body: json
+  auth: inherit
+}
+
+params:query {
+  end_date: 2025-10-31
+  start_date: 2025-09-01
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,55 @@
+meta {
+  name: Insert New Budget Proposals
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{API_URL}}/manage/budget-proposals?ver=2
+  body: json
+  auth: bearer
+}
+
+params:query {
+  ver: 2
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  {
+      "account_id": 1,
+      "title": "Anggaran Perbaikan Minor Outlet Pusat - Q4 2025 (Revisi)",
+      "items": [
+          {
+              "name": "Jasa Service AC 2 Unit",
+              "description": "Termasuk pembersihan dan isi freon",
+              "quantity": 1,
+              "unit_price": 700000
+          },
+          {
+              "name": "Cat Tembok Weatherproof (Pail 25kg)",
+              "description": "Warna Putih Gading - Kode WP-002",
+              "quantity": 3,
+              "unit_price": 1200000
+          },
+          {
+              "name": "Upah Tukang Cat",
+              "description": "Estimasi 2 orang selama 3 hari",
+              "quantity": 6,
+              "unit_price": 150000
+          }
+      ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,24 @@
+meta {
+  name: Delete Budget Proposals
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{API_URL}}/manage/budget-proposals/2
+  body: multipartForm
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

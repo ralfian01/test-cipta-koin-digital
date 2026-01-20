@@ -1,0 +1,28 @@
+meta {
+  name: Get Customers
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/manage/customers
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~business_id: 2
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

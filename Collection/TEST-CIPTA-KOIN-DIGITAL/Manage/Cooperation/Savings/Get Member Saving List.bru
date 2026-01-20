@@ -1,0 +1,32 @@
+meta {
+  name: Get Member Saving List
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/manage/cooperation/savings
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~id: 
+  ~member_id: 3
+  ~cooperation_savings_type_id: 3
+  ~start_date: 
+  ~end_date: 
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

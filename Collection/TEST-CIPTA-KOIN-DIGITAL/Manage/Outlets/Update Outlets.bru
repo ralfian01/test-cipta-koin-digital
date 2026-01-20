@@ -1,0 +1,29 @@
+meta {
+  name: Update Outlets
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{API_URL}}/manage/outlets/1
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+body:multipart-form {
+  business_id: 1
+  name: Sewa Gedung Pondok Indah
+  contact: 081231234567
+  address: BSD Tangsel
+  ~geolocation: 
+  ~is_active: 
+}
+
+settings {
+  encodeUrl: true
+}

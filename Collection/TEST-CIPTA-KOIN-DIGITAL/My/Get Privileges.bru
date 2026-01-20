@@ -1,0 +1,24 @@
+meta {
+  name: Get Privileges
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{API_URL}}/my/privileges
+  body: none
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

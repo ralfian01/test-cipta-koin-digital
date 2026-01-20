@@ -1,0 +1,28 @@
+meta {
+  name: Update Budget Proposals
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{API_URL}}/manage/budget-proposals/2
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+body:json {
+  {
+      "account_id": 1,
+      "status": "APPROVED"
+      // "rejection_reason": ""
+  }
+}
+
+settings {
+  encodeUrl: true
+}

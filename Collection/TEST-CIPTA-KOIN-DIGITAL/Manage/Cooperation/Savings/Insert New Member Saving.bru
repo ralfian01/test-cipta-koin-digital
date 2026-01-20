@@ -1,0 +1,36 @@
+meta {
+  name: Insert New Member Saving
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{API_URL}}/manage/cooperation/savings
+  body: json
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  {
+      "member_id": 3,
+      "transaction_date": "2026-01-05",
+      "description": "Simpanan Pokok",
+      "transaction_type": "DEPOSIT",
+      "items": [
+          { "cooperation_savings_type_id": 1, "amount": 15000000 }
+      ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

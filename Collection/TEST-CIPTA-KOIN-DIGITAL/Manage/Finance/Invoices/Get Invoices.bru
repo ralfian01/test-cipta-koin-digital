@@ -1,0 +1,30 @@
+meta {
+  name: Get Invoices
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/manage/finance/invoices?business_id=1&id=3
+  body: none
+  auth: bearer
+}
+
+params:query {
+  business_id: 1
+  id: 3
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

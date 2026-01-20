@@ -1,0 +1,24 @@
+meta {
+  name: Delete Accounts
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{API_URL}}/manage/accounts/1
+  body: multipartForm
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

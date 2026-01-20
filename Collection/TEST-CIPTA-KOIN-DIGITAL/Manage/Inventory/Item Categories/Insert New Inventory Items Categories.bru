@@ -1,0 +1,32 @@
+meta {
+  name: Insert New Inventory Items Categories
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{API_URL}}/manage/inventory/item-categories
+  body: json
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  {
+      "business_id": 1,
+      "name": "Baju",
+      "description": ""
+  }
+}
+
+settings {
+  encodeUrl: true
+}

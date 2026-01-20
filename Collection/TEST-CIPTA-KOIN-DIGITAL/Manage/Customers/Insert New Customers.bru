@@ -1,0 +1,33 @@
+meta {
+  name: Insert New Customers
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{API_URL}}/manage/customers
+  body: multipartForm
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:multipart-form {
+  business_id: 2
+  customer_category_id: 1
+  name: Indra
+  phone_number: 08123456789
+  email: 
+  address: 
+}
+
+settings {
+  encodeUrl: true
+}

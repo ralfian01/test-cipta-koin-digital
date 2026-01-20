@@ -1,0 +1,20 @@
+meta {
+  name: Delete Taxes
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{API_URL}}/manage/taxes/1
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+settings {
+  encodeUrl: true
+}

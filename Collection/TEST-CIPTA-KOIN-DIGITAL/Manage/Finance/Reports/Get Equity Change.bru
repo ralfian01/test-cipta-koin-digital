@@ -1,0 +1,30 @@
+meta {
+  name: Get Equity Change
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{API_URL}}/manage/finance/reports/equity-change?business_id=1&start_date=2025-01-01&end_date=2025-01-31
+  body: json
+  auth: bearer
+}
+
+params:query {
+  business_id: 1
+  start_date: 2025-01-01
+  end_date: 2025-01-31
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

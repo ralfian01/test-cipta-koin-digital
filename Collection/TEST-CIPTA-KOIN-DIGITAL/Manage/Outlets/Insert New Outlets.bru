@@ -1,0 +1,33 @@
+meta {
+  name: Insert New Outlets
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{API_URL}}/manage/outlets
+  body: multipartForm
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:multipart-form {
+  business_id: 2
+  name: Golf BSD Tangsel
+  contact: 081231234567
+  address: BSD Tangsel
+  ~geolocation: 
+  ~is_active: 
+}
+
+settings {
+  encodeUrl: true
+}

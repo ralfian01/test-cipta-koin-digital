@@ -1,0 +1,31 @@
+meta {
+  name: Get AP Ledger Report
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{API_URL}}/manage/finance/reports/account-payable-ledger?business_id=1&start_date=2025-12-01&end_date=2025-12-31&contact_id=7
+  body: none
+  auth: bearer
+}
+
+params:query {
+  business_id: 1
+  start_date: 2025-12-01
+  end_date: 2025-12-31
+  contact_id: 7
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

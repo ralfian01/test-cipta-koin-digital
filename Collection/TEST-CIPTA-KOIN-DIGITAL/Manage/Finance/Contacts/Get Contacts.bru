@@ -1,0 +1,29 @@
+meta {
+  name: Get Contacts
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/manage/finance/contacts?business_id=1&contact_type=CUSTOMER
+  body: none
+  auth: bearer
+}
+
+params:query {
+  business_id: 1
+  contact_type: CUSTOMER
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

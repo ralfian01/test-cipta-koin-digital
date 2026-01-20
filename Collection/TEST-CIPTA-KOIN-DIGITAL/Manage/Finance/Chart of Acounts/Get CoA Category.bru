@@ -1,0 +1,28 @@
+meta {
+  name: Get CoA Category
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{API_URL}}/manage/finance/chart-of-accounts/categories
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~account_type: REVENUE
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

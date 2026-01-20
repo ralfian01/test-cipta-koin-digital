@@ -1,0 +1,44 @@
+meta {
+  name: Insert Account Category Mapping Settings
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{API_URL}}/manage/finance/settings/account-category-mapping
+  body: json
+  auth: bearer
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  {
+      "business_id": 1,
+      "mappings": [
+          {
+              "source_category_id": 15,
+              "recommended_category_id": 1
+          },
+          {
+              "source_category_id": 15,
+              "recommended_category_id": 8
+          },
+          {
+              "source_category_id": 13,
+              "recommended_category_id": 2
+          }
+      ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

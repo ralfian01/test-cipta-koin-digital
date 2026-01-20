@@ -1,0 +1,33 @@
+meta {
+  name: Get Journal Entries
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/manage/finance/journal-entries?start_date=2026-01-01&end_date=2026-01-31&business_id=1
+  body: none
+  auth: bearer
+}
+
+params:query {
+  start_date: 2026-01-01
+  end_date: 2026-01-31
+  business_id: 1
+  ~page: 
+  ~per_page: 100
+  ~page: 3
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,31 @@
+meta {
+  name: Delete Units
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{API_URL}}/manage/units/9
+  body: json
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  {
+      "name": "Box",
+      "description": "Satuan barang per-box/kardus"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

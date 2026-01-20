@@ -1,0 +1,24 @@
+meta {
+  name: Get Promos
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{API_URL}}/manage/promos
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~business_id: 1
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

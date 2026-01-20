@@ -1,0 +1,29 @@
+meta {
+  name: Get Balance Sheet Reports
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{API_URL}}/manage/finance/reports/balance-sheet?business_id=1&end_date=2025-01-31
+  body: json
+  auth: bearer
+}
+
+params:query {
+  business_id: 1
+  end_date: 2025-01-31
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

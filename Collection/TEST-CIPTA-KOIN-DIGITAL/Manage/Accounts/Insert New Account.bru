@@ -1,0 +1,33 @@
+meta {
+  name: Insert New Account
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{API_URL}}/manage/accounts
+  body: json
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  {
+      "username": "finance1",
+      "password": "12345678",
+      "password_confirmation": "12345678",
+      "role_ids": [1]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,32 @@
+meta {
+  name: Insert New Todo List
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{API_URL}}/my/todo
+  body: json
+  auth: bearer
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  {
+    "title": "Testing",
+    "description": "Awoakawok"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

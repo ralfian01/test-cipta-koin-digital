@@ -1,0 +1,37 @@
+meta {
+  name: Insert CoA
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{API_URL}}/manage/finance/chart-of-accounts
+  body: json
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  {
+      "parent_id": 5,
+      "business_id": 1,
+      "account_code": "4-3010",
+      "account_name": "Pendapatan Usaha Lainnya",
+      "account_type": "REVENUE",
+      "normal_balance": "CREDIT",
+      "cash_flow_activity": "OPERATING",
+      "is_active": true
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Get Cooperation Saving Mapping Setting
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/manage/cooperation/settings/savings-mapping?code=PRINCIPAL
+  body: none
+  auth: bearer
+}
+
+params:query {
+  code: PRINCIPAL
+  ~business_id: 1
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

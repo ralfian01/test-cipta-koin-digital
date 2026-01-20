@@ -1,0 +1,31 @@
+meta {
+  name: Insert New Roles
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{API_URL}}/manage/roles
+  body: json
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  {
+      "name": "Admin",
+      "privilege_ids": [1,2,3]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

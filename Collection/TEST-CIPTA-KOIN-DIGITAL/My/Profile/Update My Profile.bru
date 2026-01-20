@@ -1,0 +1,27 @@
+meta {
+  name: Update My Profile
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{API_URL}}/my/profile
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+body:json {
+  {
+      "account_id": 1,
+      "name": "Administrator Utama"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

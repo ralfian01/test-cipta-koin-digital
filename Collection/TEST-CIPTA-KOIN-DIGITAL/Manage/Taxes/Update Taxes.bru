@@ -1,0 +1,29 @@
+meta {
+  name: Update Taxes
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{API_URL}}/manage/taxes/1
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+body:multipart-form {
+  outlet_id: 1
+  name: PPN
+  rate: 11
+  type: PERCENTAGE
+  ~description: 
+  ~is_active: 1
+}
+
+settings {
+  encodeUrl: true
+}

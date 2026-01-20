@@ -1,0 +1,31 @@
+meta {
+  name: Get Consolidated Member Savings Ledger
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{API_URL}}/manage/finance/reports/consolidated/member-savings-ledger?member_id=3&cooperation_savings_type_id=1&start_date=2026-01-01&end_date=2026-12-31
+  body: none
+  auth: bearer
+}
+
+params:query {
+  member_id: 3
+  cooperation_savings_type_id: 1
+  start_date: 2026-01-01
+  end_date: 2026-12-31
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

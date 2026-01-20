@@ -1,0 +1,18 @@
+meta {
+  name: Koperasi API
+}
+
+auth {
+  mode: none
+}
+
+vars:pre-request {
+  Origin: http://localhost:9090/api
+  Bearer: 
+  API_URL: http://localhost:9091/api
+  ~API_URL: https://api.koppusydu.co.id
+}
+
+script:post-response {
+  // bru.deleteVar("Bearer");
+}

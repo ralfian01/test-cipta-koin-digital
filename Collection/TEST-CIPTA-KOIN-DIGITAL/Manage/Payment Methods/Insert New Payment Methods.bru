@@ -1,0 +1,30 @@
+meta {
+  name: Insert New Payment Methods
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{API_URL}}/manage/payment_methods
+  body: multipartForm
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:multipart-form {
+  name: QRIS Static
+  type: QRIS
+  ~logo: 
+}
+
+settings {
+  encodeUrl: true
+}

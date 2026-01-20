@@ -1,0 +1,25 @@
+meta {
+  name: Get Financial Ratio
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{API_URL}}/manage/finance/reports/consolidated/financial-ratio?start_date=2025-01-01&end_date=2025-12-31
+  body: json
+  auth: inherit
+}
+
+params:query {
+  start_date: 2025-01-01
+  end_date: 2025-12-31
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+settings {
+  encodeUrl: true
+}

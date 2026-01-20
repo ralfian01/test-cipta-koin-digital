@@ -1,0 +1,32 @@
+meta {
+  name: Get AR Ledger Report
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{API_URL}}/manage/finance/reports/account-receivable-ledger?business_id=1&start_date=2025-12-01&end_date=2025-12-31&contact_id=11
+  body: none
+  auth: bearer
+}
+
+params:query {
+  business_id: 1
+  start_date: 2025-12-01
+  end_date: 2025-12-31
+  contact_id: 11
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

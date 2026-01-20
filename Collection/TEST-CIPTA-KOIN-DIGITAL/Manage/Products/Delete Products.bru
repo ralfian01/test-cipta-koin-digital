@@ -1,0 +1,72 @@
+meta {
+  name: Delete Products
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{API_URL}}/manage/products/1
+  body: json
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  // PRODUCT CONSUMPTION
+  {
+      "business_id": 1,
+      "category_id": 2,
+      "name": "Kaos Polo",
+      "product_type": "CONSUMPTION",
+      "variants": [
+          {
+              "name": "Biru, L", 
+              "stock_quantity": 100,
+              "pricing": [
+                  { 
+                      "customer_category_id": 1, 
+                      "price": 250000,
+                      "unit_id": 1 // <-- WAJIB: Asumsi ID 1 adalah untuk unit "Pcs"
+                  },
+                  { 
+                      "customer_category_id": 2, 
+                      "price": 225000,
+                      "unit_id": 1 // <-- WAJIB: Asumsi ID 1 adalah untuk unit "Pcs"
+                  }
+              ]
+          }
+      ]
+  }
+  
+  // // PRODUCT RENTAL
+  // {
+  //     "business_id": 1,
+  //     "category_id": 1,
+  //     "name": "Sewa Lapangan Badminton",
+  //     "product_type": "RENTAL",
+  //     "resources": [
+  //         {
+  //             "name": "Lapangan A",
+  //             "availability": [ 
+  //                 { "day_of_week": 1, "start_time": "08:00", "end_time": "22:00" } 
+  //             ],
+  //             "pricing": [
+  //                 { "customer_category_id": 1, "unit_id": 2, "price": 85000 },
+  //                 { "customer_category_id": 2, "unit_id": 2, "price": 75000 }
+  //             ]
+  //         }
+  //     ]
+  // }
+}
+
+settings {
+  encodeUrl: true
+}

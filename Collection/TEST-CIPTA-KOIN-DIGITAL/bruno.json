@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "TEST-CIPTA-KOIN-DIGITAL",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

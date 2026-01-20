@@ -1,0 +1,29 @@
+meta {
+  name: Get Employees
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/manage/employees?business_id=1
+  body: none
+  auth: bearer
+}
+
+params:query {
+  business_id: 1
+  ~outlet_id: 1
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+}

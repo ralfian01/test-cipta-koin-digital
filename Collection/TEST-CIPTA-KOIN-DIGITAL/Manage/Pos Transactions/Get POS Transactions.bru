@@ -1,0 +1,29 @@
+meta {
+  name: Get POS Transactions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/manage/pos-transactions?business_id=1
+  body: text
+  auth: bearer
+}
+
+params:query {
+  business_id: 1
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

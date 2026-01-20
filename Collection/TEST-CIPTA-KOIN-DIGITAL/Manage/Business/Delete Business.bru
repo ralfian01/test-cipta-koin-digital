@@ -1,0 +1,20 @@
+meta {
+  name: Delete Business
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{API_URL}}/manage/business/2
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  Authorization: {{Bearer}}
+  Origin: {{Origin}}
+}
+
+settings {
+  encodeUrl: true
+}

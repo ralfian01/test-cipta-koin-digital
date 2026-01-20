@@ -1,0 +1,43 @@
+meta {
+  name: Insert New Packages
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{API_URL}}/manage/packages
+  body: json
+  auth: bearer
+}
+
+headers {
+  Origin: {{Origin}}
+  Authorization: {{Bearer}}
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:json {
+  {
+      "business_id": 2,
+      "name": "Paket Sewa Lengkap",
+      "sku": "PKT-AUL-ALL",
+      "is_active": true,
+      "items": [
+          // { "item_type": "RESOURCE", "item_id": 1, "quantity": 2, "unit_id": 2 },
+          { "item_type": "VARIANT", "item_id": 5, "quantity": 1, "unit_id": null }
+      ],
+      "pricing": [
+          { "customer_category_id": null, "price": 500000 },
+          { "customer_category_id": 1, "price": 550000 },
+          { "customer_category_id": 2, "price": 600000 }
+      ],
+      "outlet_ids": [3]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
