@@ -31,10 +31,7 @@ This repository is an example implementation of a multi-user system using Larave
    ```
 7. Run the seeder sequentially to insert the necessary rows
    ```bash
-   php artisan db:seed --class=PrivilegeSeed
-   php artisan db:seed --class=RoleSeed
-   php artisan db:seed --class=RootAdminSeed
-   php artisan db:seed --class=UserSeed
+   php artisan db:seed --class=RunAllSeeder
    ```
 7. Start the development server
    ```bash
