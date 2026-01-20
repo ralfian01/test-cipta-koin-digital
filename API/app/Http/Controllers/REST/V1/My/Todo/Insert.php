@@ -65,7 +65,7 @@ class Insert extends BaseREST
         $insert = $dbRepo->insertData();
 
         if ($insert->status) {
-            return $this->respond(201);
+            return $this->respond(201, $insert->data);
         }
 
         return $this->error(500, ['reason' => $insert->message]);

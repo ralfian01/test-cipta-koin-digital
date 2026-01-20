@@ -1,0 +1,5 @@
+{
+  "name": "Restro POS",
+  "description": "Aplikasi Point of Sale (POS) modern yang ramah tablet untuk restoran, dirancang untuk menyederhanakan proses pemesanan. Aplikasi ini memiliki antarmuka intuitif untuk menelusuri item menu, mengelola kategori, dan menangani pesanan pelanggan secara real-time.",
+  "requestFramePermissions": []
+}

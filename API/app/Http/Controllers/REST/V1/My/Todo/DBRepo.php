@@ -54,7 +54,7 @@ class DBRepo extends BaseDBRepo
                     throw new Exception("Failed to create a new customer category.");
                 }
 
-                return (object) ['status' => true];
+                return (object) ['status' => true, 'data' => ['id' => $todoList->id]];
             });
         } catch (Exception $e) {
             return (object) ['status' => false, 'message' => $e->getMessage()];
