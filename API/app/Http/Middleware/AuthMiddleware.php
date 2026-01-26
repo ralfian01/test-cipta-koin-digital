@@ -5,10 +5,13 @@ namespace App\Http\Middleware;
 use App\Models\AccountModel;
 use Closure;
 use Exception;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Tymon\JWTAuth\Exceptions\JWTException;
+
 
 class AuthMiddleware
 {
@@ -105,55 +108,52 @@ class AuthMiddleware
      */
     private function bearer(Request $request, Closure $next): Response
     {
-        // Collect header: Authorization
-        $authHead = $request->header('Authorization');
         $authStatus = false;
 
-        // Make sure authorization type is Bearer
-        if ($authHead && strpos($authHead, 'Bearer ') === 0) {
+        try {
+            // Validasi JWT + resolve user
+            $user = JWTAuth::parseToken()->authenticate();
 
-            // Authorize client using JWT
-            $token = str_replace('Bearer ', '', $authHead);
-
-            try {
-                $jwtObject = JWT::decode($token, new Key(env('JWT_SECRET_KEY'), 'HS256'));
-
-                $uuid = base64_decode($jwtObject->uid_b64);
-
-                // Validate uuid from model
-                $accData =
-                    AccountModel::select(
-                        'id as account_id',
-                        'uuid as uuid',
-                        'username as username',
-                        'status_delete as status_delete',
-                        'status_active as status_active'
-                    )
-                    ->where('uuid', $uuid)
-                    ->getWithPrivileges();
-
-                if (!$accData->isEmpty()) {
-
-                    $accData = $accData[0];
-
-                    // Make sure account not deleted and not suspended
-                    if (
-                        !$accData->status_delete
-                        && $accData->status_active
-                    ) {
-                        $authStatus = true;
-
-                        // Remove unnecessary columns
-                        unset($accData->status_delete);
-                        unset($accData->status_active);
-
-                        // Set auth data
-                        $request->attributes->set('auth_data', $accData->toArray());
-                    }
-                }
-            } catch (\Exception $e) {
-                // 
+            if (!$user) {
+                abort(401, 'Unauthenticated');
             }
+
+            // Validasi status akun
+            if ($user->status_delete || !$user->status_active) {
+                abort(403, 'Account inactive');
+            }
+
+            // Load privilege (sesuai pola lama kamu)
+            $accData =
+                AccountModel::select(
+                    'id as account_id',
+                    'uuid',
+                    'username'
+                )
+                ->where('id', $user->id)
+                ->getWithPrivileges()
+                ->first();
+
+            if (!$accData) {
+                abort(401, 'Account not found');
+            }
+
+            // Set auth status
+            $authStatus = true;
+
+            // Inject auth data ke request (minimal & bersih)
+            $request->attributes->set('auth_data', [
+                'account_id' => $accData->account_id,
+                'uuid'       => $accData->uuid,
+                'username'   => $accData->username,
+                'privileges' => $accData->privileges ?? [],
+            ]);
+        } catch (TokenExpiredException $e) {
+            abort(401, 'Token expired');
+        } catch (TokenInvalidException $e) {
+            abort(401, 'Token invalid');
+        } catch (JWTException $e) {
+            abort(401, 'Token missing');
         }
 
         $request->attributes->set('auth_status', $authStatus);

@@ -9,11 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 /**
  * @method static mixed getWithPrivileges() Get account with its privileges
  * @method mixed getWithPrivileges() Get account with its privileges
  */
-class AccountModel extends Model
+class AccountModel extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 
@@ -56,6 +59,18 @@ class AccountModel extends Model
         return Attribute::make(
             set: fn($value) => Hash::make($value),
         );
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [
+            'username' => $this->username,
+        ];
     }
 
     /**

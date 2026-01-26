@@ -32,14 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
 	const handleLogoutClick = async () => {
 		setIsCheckingShift(true);
 		try {
-			const { has_shift } = await checkActiveShift();
-			if (has_shift) {
-				// Jika shift aktif, buka modal untuk konfirmasi PIN
-				setIsLogoutModalOpen(true);
-			} else {
-				// Jika tidak ada shift, langsung logout
-				onLogout();
-			}
+			onLogout();
 		} catch (error) {
 			console.error("Gagal memeriksa status shift saat logout:", error);
 			alert("Gagal memeriksa status shift. Tidak dapat melanjutkan logout.");
@@ -67,8 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
 					</Link>
 					<button
 						onClick={handleLogoutClick}
-						className="flex flex-col items-center text-gray-500 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-wait"
-						disabled={isCheckingShift}>
+						className="flex flex-col items-center text-gray-500 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-wait">
 						<LogoutIcon className="h-6 w-6" />
 						<span className="text-xs mt-1">
 							{isCheckingShift ? "Memeriksa..." : "Keluar"}

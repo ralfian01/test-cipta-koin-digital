@@ -8,6 +8,8 @@ use App\Models\AccountMetaModel;
 use App\Models\AccountModel;
 use Firebase\JWT\JWT;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class Account extends BaseREST
 {
@@ -68,24 +70,27 @@ class Account extends BaseREST
      */
     public function get()
     {
-        $reqTime = time();
-        $expTime = $reqTime + (3600 * 24); // 1 Hour * 24: Expires in 24 hours
-        $jwtObject = [
-            'iss' => 'JWT Authentication',
-            'iat' => $reqTime,
-            'exp' => $expTime,
-            'uid_b64' => base64_encode($this->auth['uuid']),
-            'username' => $this->auth['username']
-        ];
+        try {
 
-        // print_r(env('JWT_SECRET_KEY'));
+            // Generate JWT dari user yang sudah tervalidasi
+            $token = JWTAuth::claims([
+                'uuid' => $this->auth['uuid'],
+            ])->fromUser($this->auth);
 
-        $response = [
-            'token' => JWT::encode($jwtObject, env('JWT_SECRET_KEY'), 'HS256'),
-            // 'token' => JWT::encode($jwtObject, "BHI9y889edc#", 'HS256'),
-        ];
-
-        return $this->respond(200, $response);
+            return $this->respond(200, [
+                'token' => $token
+            ]);
+        } catch (JWTException $e) {
+            return $this->error(
+                (new Errors)
+                    ->setStatus(500, 'TOKEN_GENERATION_FAILED')
+                    ->setMessage('Failed to generate token')
+                    ->setDetail([
+                        'line' => $e->getLine(),
+                        'file' => $e->getFile(),
+                    ])
+            );
+        }
     }
 
     /**
@@ -93,54 +98,43 @@ class Account extends BaseREST
      */
     private function authorize()
     {
-        // Collect header: Authorization
         $authorizeHead = $this->request->header('Authorization');
 
-        // Make sure authorization type is Basic
-        if ($authorizeHead && strpos($authorizeHead, 'Basic ') === 0) {
+        if (!$authorizeHead || !str_starts_with($authorizeHead, 'Basic ')) {
+            return $this->unauthorized();
+        }
 
-            // Authorize client using Basic
-            $authorizeData = explode(':', base64_decode(str_replace('Basic ', '', $authorizeHead)));
+        $decoded = base64_decode(substr($authorizeHead, 6));
+        if (!$decoded || !str_contains($decoded, ':')) {
+            return $this->unauthorized();
+        }
 
-            // Validate username & password from model
-            $accData =
-                AccountModel::select(
-                    'id as account_id',
-                    'uuid',
-                    'username',
-                    'status_delete',
-                    'status_active',
-                    'password'
-                )
-                ->where('username', $authorizeData[0])
-                ->first();
+        [$username, $password] = explode(':', $decoded, 2);
 
-            if ($accData && Hash::check($authorizeData[1], $accData->password)) {
+        $accData = AccountModel::where('username', $username)->first();
 
-                // $accData = $accData->getWithPrivileges();
-
-                // Make sure account not deleted and not suspended
-                if (
-                    !$accData->status_delete
-                    && $accData->status_active
-                ) {
-                    // Remove unnecessary columns
-                    unset($accData->status_delete);
-                    unset($accData->status_active);
-
-                    return (object) [
-                        'status' => true,
-                        'auth' => $accData
-                    ];
-                }
-            }
+        if (
+            !$accData ||
+            !Hash::check($password, $accData->password) ||
+            $accData->status_delete ||
+            !$accData->status_active
+        ) {
+            return $this->unauthorized();
         }
 
         return (object) [
+            'status' => true,
+            'auth'   => $accData
+        ];
+    }
+
+    private function unauthorized()
+    {
+        return (object) [
             'status' => false,
             'errorCode' => 401,
-            'errorStatus' => "UNAUTHORIZED",
-            'errorMessage' => "You do not have permission to access this resource"
+            'errorStatus' => 'UNAUTHORIZED',
+            'errorMessage' => 'Invalid credentials'
         ];
     }
 }
