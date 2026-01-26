@@ -36,7 +36,7 @@ class RootAdminSeed extends Seeder
             $data['role_id'] = $roleId;
 
             // Buat atau update akun
-            AccountModel::updateOrCreate(['uuid' => $data['uuid']], $data);
+            AccountModel::updateOrCreate(['username' => $data['username']], $data);
         }
     }
 }

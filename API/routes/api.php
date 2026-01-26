@@ -9,6 +9,11 @@ Route::prefix('auth')->group(function () {
     Route::post('account', [RESTV1\Auth\Account::class, 'index']);
 });
 
+## Account
+Route::prefix('account')->group(function () {
+    Route::post('register', [RESTV1\Account\Register\Insert::class, 'index']);
+});
+
 ## My Data
 Route::prefix('my')->middleware(['auth:bearer'])->group(function () {
     // Route::prefix('my')->middleware('bearer')->group(function () {

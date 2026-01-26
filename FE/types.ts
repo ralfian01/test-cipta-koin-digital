@@ -58,3 +58,8 @@ export interface ApiResponse<T> {
     message: string;
     data: T;
 }
+
+export interface RegisterUser {
+    username: string;
+    password: string;
+}

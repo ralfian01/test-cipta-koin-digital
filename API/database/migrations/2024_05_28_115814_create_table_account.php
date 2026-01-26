@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('account', function (Blueprint $table) {
             $table->id();
             $table->string('uuid', 50)->nullable(false);
-            $table->string('username', 100)->nullable(false);
+            $table->string('username', 100)->nullable(false)->unique();
             $table->string('password', 100)->nullable(true);
             // # Relation to table Role
             $table->unsignedBigInteger('role_id')->nullable(false);

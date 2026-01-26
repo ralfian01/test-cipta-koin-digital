@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import TodoListPage from "./pages/TodoListPage";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
 						)
 					}
 				/>
+				<Route path="/register" element={<RegisterPage />} />
 
 				{/* Rute yang dilindungi */}
 				<Route

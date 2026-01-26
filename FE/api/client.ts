@@ -31,7 +31,9 @@ export const apiClient = async <T>(endpoint: string, options: RequestInit = {}):
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({ message: 'Terjadi kesalahan pada server.' }));
-    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+
+    throw errorData;
+    // throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
   }
 
   // Menangani respons yang berhasil tetapi tidak memiliki body konten.

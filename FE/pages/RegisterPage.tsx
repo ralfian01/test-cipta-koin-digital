@@ -2,18 +2,21 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeOffIcon } from "../components/Icons";
 import { loginUser } from "../api/auth";
+import { registerUser } from "@/api/account";
 
-const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
+const RegisterPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-	const navigate = useNavigate();
+	const [errorDetail, setErrorDetail] = useState<any>(null);
+	const [registerSuccess, setRegisterSuccess] = useState<boolean>(false);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError(null);
+		setErrorDetail(null);
 
 		if (!username || !password) {
 			setError("Username dan password harus diisi.");
@@ -21,18 +24,20 @@ const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 		}
 
 		setIsLoading(true);
+
 		try {
 			// Verifikasi login dan dapatkan data yang sudah di-unwrap (termasuk token)
-			const data = await loginUser({ username, password });
-			// Simpan token ke sessionStorage
-			sessionStorage.setItem("auth_token", data.token);
-			onLogin();
-			navigate("/cashier", { replace: true });
+			const data = await registerUser({ username, password });
+
+			if (data.code == 201) {
+				setRegisterSuccess(true);
+			}
 		} catch (err: any) {
-			setError(
-				err.message ||
-					"Login gagal. Periksa kembali username dan password Anda.",
-			);
+			if (err?.error_detail) {
+				setErrorDetail(err.error_detail);
+			} else {
+				setError(err.message || "Register akun gagal");
+			}
 		} finally {
 			setIsLoading(false);
 		}
@@ -65,18 +70,23 @@ const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 				<div className="text-center mb-8">
 					<p className="text-primary font-bold">To Do List App</p>
 					<h1 className="text-3xl font-bold text-secondary mt-2">
-						Selamat Datang Kembali
+						Daftar Akun Baru
 					</h1>
-					<p className="text-gray-500 mt-3 text-sm">
-						Silakan masukkan username dan password untuk masuk.
-					</p>
 				</div>
-				<form onSubmit={handleSubmit} noValidate>
-					{error && (
+
+				{registerSuccess ? (
+					<div className="mb-4 text-center text-green-600 bg-green-100 p-3 rounded-lg text-sm">
+						Pendaftaran akun berhasil
+					</div>
+				) : (
+					error && (
 						<div className="mb-4 text-center text-red-600 bg-red-100 p-3 rounded-lg text-sm">
 							{error}
 						</div>
-					)}
+					)
+				)}
+
+				<form onSubmit={handleSubmit} noValidate>
 					<div className="mb-4">
 						<label
 							htmlFor="username"
@@ -86,6 +96,7 @@ const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 						<input
 							id="username"
 							type="text"
+							name="username"
 							value={username}
 							onChange={(e) => setUsername(e.target.value)}
 							placeholder="Username"
@@ -94,6 +105,12 @@ const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 							disabled={isLoading}
 						/>
 					</div>
+					{errorDetail?.username && (
+						<div className="text-sm text-red-600 mt-[-10px] mb-4">
+							{errorDetail?.username?.[0]}
+						</div>
+					)}
+
 					<div className="mb-8">
 						<label
 							htmlFor="password"
@@ -103,6 +120,7 @@ const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 						<div className="relative">
 							<input
 								id="password"
+								name="password"
 								type={showPassword ? "text" : "password"}
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
@@ -127,26 +145,31 @@ const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 							</button>
 						</div>
 					</div>
-
-					<div className="block mb-5">
-						Belum punya akun?{" "}
-						<Link
-							to="/register"
-							className="text-primary font-bold hover:text-red-400">
-							Daftar Sekarang
-						</Link>
-					</div>
+					{errorDetail?.password && (
+						<div className="text-sm text-red-600 mt-[-20px] mb-b">
+							{errorDetail?.password?.[0]}
+						</div>
+					)}
 
 					<button
 						type="submit"
 						className="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-primary-light transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
 						disabled={isLoading}>
-						{isLoading ? "Memproses..." : "Login"}
+						{isLoading ? "Memproses..." : "Daftar Akun"}
 					</button>
+
+					<div className="block mt-5">
+						Sudah punya akun?{" "}
+						<Link
+							to="/login"
+							className="text-primary font-bold hover:text-red-400">
+							Login Sekarang
+						</Link>
+					</div>
 				</form>
 			</div>
 		</div>
 	);
 };
 
-export default LoginPage;
+export default RegisterPage;

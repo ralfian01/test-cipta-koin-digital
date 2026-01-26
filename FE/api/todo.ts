@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import { ApiResponse, CreateTodo, GetTodoList, Todo, UpdateTodo } from '../types';
+import { CreateTodo, Todo, UpdateTodo } from '../types';
 
 export const getTodoList = async (id?: number): Promise<any> => {
   const result = await apiClient<{ data: Todo; }>(`/my/todo/${id ?? ""}`, {
